@@ -13,6 +13,6 @@ const HolidaySchema = new Schema({
 
 })
 
-const Holiday = mongoose.model('Holiday', HolidaySchema)
+const Holiday = mongoose.model('Holiday_db', HolidaySchema)
 
 export default Holiday
