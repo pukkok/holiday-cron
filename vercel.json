@@ -17,7 +17,7 @@
       }
     ],
     "crons": [{
-      "path": "/api/cron",
+      "path": "/holiday-update",
       "schedule": "0 0 * * *"
     }]
 }
