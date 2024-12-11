@@ -5,6 +5,11 @@ const port = 8080
 import getApiUrl from "./get-api-url.js";
 
 import mongoose from "mongoose";
+import config from "./config.js";
+
+mongoose.connect(config.MONGODB_URI)
+.then(()=> console.log('mongoDB 연결 완료'))
+.catch((err) => console.log(`DB연결 실패 : ${err}`))
 
 app.use(express.json())
 
