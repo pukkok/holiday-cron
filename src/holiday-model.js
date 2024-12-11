@@ -4,7 +4,8 @@ const { Schema } = mongoose
 const HolidaySchema = new Schema({
   base_year : {
     type : Number,
-    require : true
+    require : true,
+    unique : true
   },
   item : {
     type : Object,
@@ -13,6 +14,6 @@ const HolidaySchema = new Schema({
 
 })
 
-const Holiday = mongoose.model('Holiday_db', HolidaySchema)
+const Holiday = mongoose.model('public_holidays', HolidaySchema)
 
 export default Holiday
