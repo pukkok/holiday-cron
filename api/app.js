@@ -40,7 +40,7 @@ app.get('/restday-update', expressAsyncHandler( async(req, res, next) => {
   } else {
     const yearInfo = new Holiday({
       base_year : year,
-      item : data
+      item : data.response.body.items.item
     })
     const success = await yearInfo.save()
 
@@ -55,6 +55,7 @@ app.get('/restday-update', expressAsyncHandler( async(req, res, next) => {
 app.get('/restday-list', expressAsyncHandler( async(req, res, next) => {
   let year = new Date().getFullYear()
   if(req.query.year) year = req.query.year
+
   const thisYearInfo = await Holiday.findOne({base_year: year})
   res.status(200).json({code: 200, data : thisYearInfo})
 }))
