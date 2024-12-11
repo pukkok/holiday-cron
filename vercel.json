@@ -1,9 +1,5 @@
 { 
     "version": 2,
-    "rewrites": [
-      { "source": "/api/cron", "destination": "/api/cron" },
-      { "source": "/api/(.*)", "destination": "/api/$1" }
-    ],
     "regions" : ["icn1"],
     "headers": [
       {
@@ -17,7 +13,7 @@
       }
     ],
     "crons": [{
-      "path": "/holiday-update",
+      "path": "/api/holiday-update",
       "schedule": "0 0 * * *"
     }]
 }
