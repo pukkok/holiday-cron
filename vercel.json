@@ -15,6 +15,6 @@
     ],
     "crons": [{
       "path": "/holiday-update",
-      "schedule": "0 0 * * *"
+      "schedule": "40 0 * * *"
     }]
 }
