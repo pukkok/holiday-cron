@@ -20,12 +20,13 @@ app.get('/', (req, res, next) => {
   res.status(200).json({code: 200, msg : "서버 접속 확인"})
 })
 
-app.get('/restday-update', expressAsyncHandler( async(req, res, next) => {
+app.get('/holiday-update', expressAsyncHandler( async(req, res, next) => {
   let year = new Date().getFullYear()
   if(req.query.year) year = req.query.year
   const apiUrl = getApiUrl(year)
   const thisYearInfo = await Holiday.findOne({base_year: year})
-  const data = await fetch(apiUrl).then(res => res.json())
+  const apiData = await fetch(apiUrl).then(res => res.json())
+  const data = apiData.response.body.items.item
 
   if(thisYearInfo) {
     thisYearInfo.item = data
@@ -40,7 +41,7 @@ app.get('/restday-update', expressAsyncHandler( async(req, res, next) => {
   } else {
     const yearInfo = new Holiday({
       base_year : year,
-      item : data.response.body.items.item
+      item : data
     })
     const success = await yearInfo.save()
 
@@ -52,7 +53,7 @@ app.get('/restday-update', expressAsyncHandler( async(req, res, next) => {
   }
 }))
 
-app.get('/restday-list', expressAsyncHandler( async(req, res, next) => {
+app.get('/holiday-list', expressAsyncHandler( async(req, res, next) => {
   let year = new Date().getFullYear()
   if(req.query.year) year = req.query.year
 
