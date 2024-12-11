@@ -6,7 +6,7 @@
   "author": "Pukkok <krystalgggg@gmail.com>",
   "type": "module",
   "scripts": {
-    "start": "node api/app.js"
+    "start": "node api/index.js"
   },
   "license": "MIT",
   "dependencies": {
