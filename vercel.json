@@ -1,5 +1,6 @@
 { 
     "version": 2,
+    "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
     "regions" : ["icn1"],
     "headers": [
       {
@@ -11,5 +12,9 @@
           { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
         ]
       }
-    ]
+    ],
+    "crons": [{
+      "path": "/api/holiday-update",
+      "schedule": "0 0 * * *"
+    }]
 }
