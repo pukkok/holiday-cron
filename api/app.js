@@ -11,6 +11,8 @@ mongoose.connect(config.MONGODB_URI)
 .then(()=> console.log('mongoDB 연결 완료'))
 .catch((err) => console.log(`DB연결 실패 : ${err}`))
 
+import Holiday from "../src/holiday-model.js";
+
 app.use(express.json())
 
 app.get('/', (req, res, next) => {
@@ -19,13 +21,43 @@ app.get('/', (req, res, next) => {
 })
 
 app.get('/restday-update', expressAsyncHandler( async(req, res, next) => {
-  const apiUrl = getApiUrl()
-  res.status(200).json({code: 200, msg : apiUrl})
+  let year = new Date().getFullYear()
+  if(req.query.year) year = req.query.year
+  const apiUrl = getApiUrl(year)
+  const thisYearInfo = await Holiday.findOne({base_year: year})
+  const data = await fetch(apiUrl).then(res => res.json())
+
+  if(thisYearInfo) {
+    thisYearInfo.item = data
+    const success = await thisYearInfo.save()
+
+    if(success) {
+      res.status(200).json({code: 200, msg: "업데이트 완료"})
+    } else {
+      res.status(400).json({code: 400, msg: "업데이트 실패"})
+    }
+
+  } else {
+    const yearInfo = new Holiday({
+      base_year : year,
+      item : data
+    })
+    const success = await yearInfo.save()
+
+    if(success) {
+      res.status(200).json({code: 200, msg: '새로운 데이터 생성'})
+    } else {
+      res.status(401).json({code: 401, msg: '데이터 저장 실패'})
+    }
+  }
 }))
 
-// app.get('/restday-list', expressAsyncHandler( async(req, res, next) => {
-
-// }))
+app.get('/restday-list', expressAsyncHandler( async(req, res, next) => {
+  let year = new Date().getFullYear()
+  if(req.query.year) year = req.query.year
+  const thisYearInfo = await Holiday.findOne({base_year: year})
+  res.status(200).json({code: 200, data : thisYearInfo})
+}))
 
 app.use((req, res, next) => {
   res.status(404).json({ code: 404, msg: '페이지를 찾을 수 없습니다.'})
