@@ -1,17 +1,17 @@
-import express from "express";
-import expressAsyncHandler from "express-async-handler";
+import express from "express"
+import expressAsyncHandler from "express-async-handler"
 const app = express()
 const port = 8080
-import getApiUrl from "./get-api-url.js";
+import getApiUrl from "./get-api-url.js"
 
-import mongoose from "mongoose";
-import config from "./config.js";
+import mongoose from "mongoose"
+import config from "./config.js"
 
 mongoose.connect(config.MONGODB_URI)
 .then(()=> console.log('mongoDB 연결 완료'))
 .catch((err) => console.log(`DB연결 실패 : ${err}`))
 
-import Holiday from "../src/holiday-model.js";
+import Holiday from "../src/holiday-model.js"
 
 app.use(express.json())
 
